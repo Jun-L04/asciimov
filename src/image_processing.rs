@@ -1,8 +1,9 @@
 use image::{RgbaImage, imageops::FilterType};
 use crossterm::terminal;
+use std::path::Path;
 
 
-pub fn grayscale(path: &str) -> &str {
+pub fn grayscale(path: &Path) -> &Path {
     let mut img: RgbaImage = image::open(path)
         .expect("Cannot Open Image in Path: {path}")
         .to_rgba8();
@@ -26,7 +27,8 @@ pub fn grayscale(path: &str) -> &str {
             pixel[2] = avg; // B
         }
     }
-    let output_path = "src\\img\\grayscale.png";
+//    let output_path = "src\\img\\grayscale.png";
+    let output_path = Path::new("src/img/grayscale.png");
     img.save(output_path)
         .expect("Unable to Save Grayscaled Image");
 
@@ -34,8 +36,8 @@ pub fn grayscale(path: &str) -> &str {
 }
 
 
-pub fn scale_image(input_path: &str, new_width: u32, new_height: u32) -> &str {
-    let output_path = "src\\img\\scaled.png";
+pub fn scale_image(input_path: &Path, new_width: u32, new_height: u32) -> &Path {
+    let output_path = Path::new("src/img/scaled.png");
     // open image
     let img = image::open(input_path).expect("Failed to Open Image");
 
@@ -44,11 +46,11 @@ pub fn scale_image(input_path: &str, new_width: u32, new_height: u32) -> &str {
 
     // saving scaled image to the specified path
     resized_img.save(output_path).expect("Failed to Save Scaled Image");
-    return output_path;
+    return &output_path;
 }
 
 
-pub fn get_scale_factor(output_path: &str) -> Result<(u32, u32), String> {
+pub fn get_scale_factor(output_path: &Path) -> Result<(u32, u32), String> {
 
     let img: RgbaImage = image::open(output_path)
         .expect("Cannot Open Image in Path: {path}")
@@ -79,4 +81,9 @@ pub fn get_scale_factor(output_path: &str) -> Result<(u32, u32), String> {
         }
         Err(e) => Err(format!("Failed to Get Terminal Dimensions. {}", e)),
     }
+}
+
+
+pub fn clean_up() {
+    // scaling image is an intermediate step, we delete it afterwards
 }

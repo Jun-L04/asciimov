@@ -1,15 +1,15 @@
 use clap::Parser;
-use std::io::Write;
+//use std::{fmt::format, io::Write};
 
 mod image_processing;
 mod ascii_fy;
 use image_processing::{get_scale_factor, grayscale, scale_image};
-use ascii_fy::convert_to_ascii;
+use ascii_fy::{convert_to_ascii, print_to_console};
+use std::path::Path;
 
 // TODO I just want to grayscale an image
 // TODO arguments for build-in parsing & conversion
     // maybe matching keywords from an array
-// TODO file path based on windows/unix-like system
 // TODO possibly resizing terminal window?
 // TODO pakcage into command line tool
 // TODO add tests
@@ -18,31 +18,47 @@ use ascii_fy::convert_to_ascii;
 // TODO refine gitignore
 // TODO have each function return the Result<something, error> thingy
 
-/// Search for a pattern in a file and display the lines that contain it.
+// enum PathOption {
+//     Pathbuf(PathBuf), 
+//     String(String),
+// }
 #[derive(Parser)]
+#[command(about = "A CLI tool for simple image processing.")]
 struct Cli {
-    // name of the character we want in ascii, it is just bocchi for now
-    character_name: String,
-    // something else maybe? another arugment?
-    // path: std::path::PathBuf,
+    // type of operation
+    #[arg(help = "'as' for ascii-fying the image, 'gs' for grayscaling.")]
+    operation: String,
+
+    // optional, path parameter
+    #[arg(help = "Path to the image to process.")]
+    path: String //PathBuf,
+    // resizing of terminal: true or false
 }
 
-// fn main() {
-//     let args = Cli::parse();
-
-//     let content = std::fs::read_to_string(&args.path).expect("could not read file");
-
-//     for line in content.lines() {
-//         if line.contains(&args.pattern) {
-//             println!("{}", line);
-//         }
-//     }
-
-//     println!("pattern: {:?}, path: {:?}", args.pattern, args.path)
-// }
 
 fn main() {
-    let path = "src\\img\\blackhole.jpeg";
+    let args = Cli::parse();
+    let operation = args.operation.as_str();
+    let usr_path  = Path::new(&args.path);
+
+    match operation {
+        "as" => {
+            ascii_sequence(&usr_path);
+        }
+        "gs" => {
+            grayscale_sequence(&usr_path);
+        }
+        _ => {
+            // unkown operation
+            eprintln!("Unknown Operation: '{}'. \nTry '--help'.", operation);
+        }
+    }
+
+}
+
+
+fn ascii_sequence(usr_path: &Path) {
+    let path = usr_path; //Path::new("src/img/blackhole.jpeg");
     // conversion to grayscale
     let grayscale_path = grayscale(path);
     // new dimensions for scaling
@@ -56,17 +72,9 @@ fn main() {
 }
 
 
-fn print_to_console() -> std::io::Result<()> {
-    let stdout = std::io::stdout(); // get the global stdout entity
-    let mut handle = stdout.lock(); // acquire a lock on it
-    
-
-    let ascii_file_path = "ascii.txt";
-    let content = std::fs::read_to_string(ascii_file_path).expect("could not read file");
-    // let pb = indificati::ProgressBar
-    for line in content.lines() {
-        writeln!(handle, "{}", line)?; // add `?` if you care about errors here
-    }
-
-    Ok(())
+fn grayscale_sequence(usr_path: &Path) {
+    let path = usr_path; //Path::new("src/img/blackhole.jpeg");
+    // conversion to grayscale
+    let grayscale_path = grayscale(path);
+    println!("Done and saved to {}.", grayscale_path.display());
 }
