@@ -1,6 +1,7 @@
 use image::{RgbaImage, imageops::FilterType};
 use crossterm::terminal;
 use std::path::Path;
+use std::env;
 
 
 pub fn grayscale(path: &Path) -> &Path {
@@ -27,7 +28,6 @@ pub fn grayscale(path: &Path) -> &Path {
             pixel[2] = avg; // B
         }
     }
-//    let output_path = "src\\img\\grayscale.png";
     let output_path = Path::new("src/img/grayscale.png");
     img.save(output_path)
         .expect("Unable to Save Grayscaled Image");
@@ -84,6 +84,6 @@ pub fn get_scale_factor(output_path: &Path) -> Result<(u32, u32), String> {
 }
 
 
-pub fn clean_up() {
-    // scaling image is an intermediate step, we delete it afterwards
-}
+// pub fn clean_up_image() {
+//     // scaling image is an intermediate step, we delete it afterwards
+// }

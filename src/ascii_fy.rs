@@ -65,3 +65,8 @@ pub fn print_to_console() -> std::io::Result<()> {
 
     Ok(())
 }
+
+
+// pub fn clean_up_ascii() {
+    
+// }

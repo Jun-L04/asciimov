@@ -8,14 +8,12 @@ use ascii_fy::{convert_to_ascii, print_to_console};
 use std::path::Path;
 
 // TODO I just want to grayscale an image
-// TODO arguments for build-in parsing & conversion
-    // maybe matching keywords from an array
-// TODO possibly resizing terminal window?
+    // output is saved in the parent directory in a newly created folder called processed_img
+    // if directory: grayscale all images, if image, just grayscale that one
 // TODO pakcage into command line tool
 // TODO add tests
 // TODO colored ascii?
 // TODO add logging
-// TODO refine gitignore
 // TODO have each function return the Result<something, error> thingy
 
 // enum PathOption {
