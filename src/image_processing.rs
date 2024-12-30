@@ -1,7 +1,6 @@
 use image::{RgbaImage, imageops::FilterType};
 use crossterm::terminal;
 use std::path::Path;
-use std::env;
 
 
 pub fn grayscale(path: &Path) -> &Path {

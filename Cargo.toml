@@ -2,14 +2,14 @@
 name = "asciimov"
 version = "0.1.0"
 edition = "2021"
-author = ["Junyang Lu jlu@umass.edu"]
-license = "MIT
+authors = ["Junyang Lu <jlu@umass.edu>"]
+license = "MIT OR Apache-2.0"
 description = "A command line tool to generate ascii art given an image. Also has some image processing power."
 readme = "README.md"
 homepage = "https://github.com/Jun-L04/asciimov"
 repository = "https://github.com/Jun-L04/asciimov"
-keyword = ["cli", "ascii", "grayscale"]
-categories = ["command-line-utilities]
+keywords = ["cli", "ascii", "grayscale"]
+categories = ["command-line-utilities"]
 
 
 [dependencies]
